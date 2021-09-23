@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+{% if app.user %}
+    <div class="container">
+        <h1>Bonjour {{ app.user.username }}! ✅</h1>
+
+        <p class="fs-2">Bienvenue sur le blog de LaPlateforme_ !</p>
+        <a href="logout" class="btn btn-danger">Se déconnecter</a></br>
+    </div>
+{% else %}
+    <div class="container">
+        <h1>Bonjour Utilisateur ! ✅</h1>
+        <p class="fs-2">Bienvenue sur le blog de LaPlateforme_ !</p>
+        <a href="login" class="btn btn-primary mb-2">Connectes-toi ici!</a>
+        <a href="register" class="btn btn-secondary mb-2">Enregistres-toi ici!</a>
+        {% if app.user %}
+        <a href="loggout" class="btn btn-danger mb-2">Déconnectes-toi ici!</a>
+        {% endif %}
+    </div>
+{% endif %}
+
+<div class="container">
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt=""/>
+                    <div class="card-body">
+                        <h5 class="card-title">{{post.title}}</h5>
+                        <p class="card-text">{{post.content}}</p>
+                        <p class="card-text">{{post.author}} - {{post.createdAt | date("d/m/Y")}}</p>
+                        <a href="/posts/{{post.id}}" class="btn btn-primary">Click!</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

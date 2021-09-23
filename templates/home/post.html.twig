@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+    {# Run `composer require symfony/webpack-encore-bundle` and uncomment the following Encore helpers to start using Symfony UX #}
+
+    {% block body %}
+        <div class="container">
+            <a href="/home" class="btn btn-primary">Retour</a>
+            <div class="d-flex justify-content-start flex-fill align-self-start">
+                <div class="card" style="width: 18rem;">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{post.title}}</h5>
+                        <p class="card-text">{{post.content}}</p>
+                        <p>{{post.author}} - {{post.createdAt | date("d/m/Y")}}</p>
+                    </div>
+                </div>
+                <div class="d-flex flex-column">
+                    {% for comment in post.comments %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{comment.pseudo}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{comment.createdAt | date("d/m/Y")}}</h6>
+                            <p class="card-text">{{comment.content}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if app.user %}
+            {{ form_start(form) }}
+                {{ form_row(form.pseudo, {
+                    label: 'Pseudo',
+                    attr: {'class': 'form-control',
+                    'readonly': true},
+                    value: app.user.username
+                }) }}
+            {{ form_end(form) }}
+            {% else %}
+                <p>Connectez-vous pour commenter !</p>
+            {% endif %}
+
+        </div>
+    {% endblock %}
+
